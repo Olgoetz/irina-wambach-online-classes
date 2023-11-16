@@ -22,7 +22,7 @@ const page = () => {
         <br />
         D-96052 Bamberg
       </p>
-      E-Mail-Adresse: <p>irina.wambach@gmx.de"</p>
+      E-Mail-Adresse: <p>irina.wambach@gmx.de</p>
       <h2 className="text-xl font-semibold my-4">
         Übersicht der Verarbeitungen
       </h2>
