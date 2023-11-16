@@ -7,6 +7,7 @@ import { fulFillOrder, updateCustomer } from "@/lib/fulfillment";
 
 export async function POST(req: Request) {
   let event: Stripe.Event;
+
   try {
     event = stripe.webhooks.constructEvent(
       await (await req.blob()).text(),

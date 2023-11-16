@@ -142,7 +142,7 @@ export async function fulFillOrder(invoice_id: string) {
       <p>${USER.split(" ")[0]}</p>
       `;
 
-      subject = `Live: Online-Fitness-Kurs mit ${
+      subject = `Live: Online-Yoga-Kurs mit ${
         USER.split(" ")[0]
       } - Rechnung und Zugangsdaten`;
       result = await sendEmail(htmlString, invoice.customer_email!, subject);
