@@ -13,11 +13,16 @@ resource "vercel_project" "this" {
     production_branch = "prod"
   }
 
+  vercel_authentication = {
+    protect_production = false
+  }
+
 }
 
 resource "vercel_project_domain" "prod" {
   project_id = vercel_project.this.id
   domain     = split("//", var.URL)[1]
+
 
 }
 
