@@ -48,14 +48,20 @@ export function validateObjectKeysContainSubstring(
   return false;
 }
 
-export function convertToDate(dateString: string): Date {
+export function convertToDateTime(
+  dateString: string,
+  timeString: string
+): Date {
   const [day, month, year] = dateString.split(".").map(Number);
+  const [startTime] = timeString.split(" - ");
 
   // Check if the year is in YY format and convert to YYYY format
   const fullYear = year < 100 ? year + 2000 : year;
-  return new Date(Date.UTC(fullYear, month - 1, day));
-}
 
+  const [hours, minutes] = startTime.split(":").map(Number);
+
+  return new Date(Date.UTC(fullYear, month - 1, day, hours, minutes));
+}
 export function isDateOlder(
   productName: string,
   dateString: string,
