@@ -9,7 +9,7 @@ import {
   checkHasProperties,
   containsSubstringCaseInsensitive,
   isDateOlder,
-  convertToDate,
+  convertToDateTime,
 } from "@/lib/utils";
 import {
   INFO_EMAIL_ADDRESS,
@@ -106,10 +106,16 @@ const Products = () => {
       );
       console.log(bookableProductsLive);
       bookableProductsLive.sort((a: any, b: any) => {
-        const dateA = convertToDate(a.product.metadata.Datum);
-        const dateB = convertToDate(b.product.metadata.Datum);
+        const dateTimeA = convertToDateTime(
+          a.product.metadata.Datum,
+          a.product.metadata.Uhrzeit
+        );
+        const dateTimeB = convertToDateTime(
+          b.product.metadata.Datum,
+          b.product.metadata.Uhrzeit
+        );
 
-        return dateA.toLocaleString().localeCompare(dateB.toLocaleString());
+        return dateTimeA.getTime() - dateTimeB.getTime();
       });
 
       setValidProductsLive(bookableProductsLive);
