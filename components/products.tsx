@@ -9,6 +9,7 @@ import {
   checkHasProperties,
   containsSubstringCaseInsensitive,
   isDateOlder,
+  convertToDate,
 } from "@/lib/utils";
 import {
   INFO_EMAIL_ADDRESS,
@@ -103,6 +104,13 @@ const Products = () => {
           e.product.metadata.Uhrzeit
         )
       );
+      console.log(bookableProductsLive);
+      bookableProductsLive.sort((a: any, b: any) => {
+        const dateA = convertToDate(a.product.metadata.Datum);
+        const dateB = convertToDate(b.product.metadata.Datum);
+
+        return dateA.toLocaleString().localeCompare(dateB.toLocaleString());
+      });
 
       setValidProductsLive(bookableProductsLive);
       setInvalidProductsLive(invalidProductsLive);
