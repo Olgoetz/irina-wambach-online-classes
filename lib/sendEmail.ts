@@ -32,7 +32,7 @@ export async function sendEmail(
       email: process.env.SENDGRID_FROM_EMAIL!,
       name: USER,
     },
-    bcc: process.env.SENDGRID_BCC_EMAIL!,
+    bcc: [process.env.SENDGRID_BCC_EMAIL!],
 
     subject: subject,
     html: htmlString,
