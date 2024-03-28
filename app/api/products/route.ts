@@ -2,7 +2,9 @@ import stripe from "@/lib/get-stripe";
 import { NextResponse } from "next/server";
 export const revalidate = 10;
 export async function GET(req: Request) {
-  const products = await stripe.products.list();
+  const products = await stripe.products.list({
+    limit: 100,
+  })
   // Loop through the products and retrieve associated prices
   //   const productsWithPrices = await Promise.all(
   //     products.data.map(async (product) => {
