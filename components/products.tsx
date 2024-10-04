@@ -10,6 +10,7 @@ import {
   containsSubstringCaseInsensitive,
   isDateOlder,
   convertToDateTime,
+  sortedProducts,
 } from "@/lib/utils";
 import {
   INFO_EMAIL_ADDRESS,
@@ -105,20 +106,22 @@ const Products = () => {
         )
       );
       console.log(bookableProductsLive);
-      bookableProductsLive.sort((a: any, b: any) => {
-        const dateTimeA = convertToDateTime(
-          a.product.metadata.Datum,
-          a.product.metadata.Uhrzeit
-        );
-        const dateTimeB = convertToDateTime(
-          b.product.metadata.Datum,
-          b.product.metadata.Uhrzeit
-        );
+      // bookableProductsLive.sort((a: any, b: any) => {
+      //   const dateTimeA = convertToDateTime(
+      //     a.product.metadata.Datum,
+      //     a.product.metadata.Uhrzeit
+      //   );
+      //   const dateTimeB = convertToDateTime(
+      //     b.product.metadata.Datum,
+      //     b.product.metadata.Uhrzeit
+      //   );
 
-        return dateTimeA.getTime() - dateTimeB.getTime();
-      });
+      //   return dateTimeA.getTime() - dateTimeB.getTime();
+      // });
 
-      setValidProductsLive(bookableProductsLive);
+      const bookableProductsLiveSorted = sortedProducts(bookableProductsLive);
+
+      setValidProductsLive(bookableProductsLiveSorted);
       setInvalidProductsLive(invalidProductsLive);
       // const filteredProducts =
       //   filteredRecordingProducts.concat(filteredLiveProducts);

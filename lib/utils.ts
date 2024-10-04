@@ -1,6 +1,8 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
+import { parse, format, compareAsc } from "date-fns";
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -122,3 +124,50 @@ export function findKeyInMetaData(
   }
   return fallBack;
 }
+
+// Helper function to parse the `Datum` and `Uhrzeit`
+const parseDateTime = (metadata: any) => {
+  let [day, month, year] = [0, 0, 0];
+  console.log("metadata", metadata.Datum.split("."));
+  if (metadata.Datum.split(".").length !== 3) {
+    const parsedDate = metadata.Datum.match(/\d{2}\.\d{2}/)[0];
+    year = new Date().getFullYear();
+    [day, month] = parsedDate.split(".");
+    console.log("parsedDate", parsedDate);
+  } else {
+    [day, month, year] = metadata.Datum.split(".");
+  }
+
+  console.log("day month year", day, month, year);
+
+  let startTime = metadata.Uhrzeit.split("-")[0].trim(); // Extract start time
+
+  if (startTime.split(" ").length > 1) {
+    startTime = startTime.split(" ")[1];
+  }
+  console.log("startTime", startTime);
+  // console.log("day", day);
+  // console.log("month", month);
+  // console.log("year", year);
+  // Build a valid date-time string using the date and time components
+  const formattedDate = `${year}-${month}-${day}T${startTime}:00`;
+  console.log("formattedDate", formattedDate);
+  // Parse the formatted date
+  return parse(formattedDate, "yyyy-MM-dd'T'HH:mm:ss", new Date());
+};
+
+export const sortedProducts = (products: any) => {
+  const sortedData = products.sort((a: any, b: any) => {
+    console.log("a", a);
+    console.log("b", b);
+    const dateA = parseDateTime(a.product.metadata);
+    const dateB = parseDateTime(b.product.metadata);
+
+    console.log("dateA", dateA);
+    console.log("dateB", dateB);
+    console.log("-----------------");
+    return compareAsc(dateA, dateB);
+  });
+
+  return sortedData;
+};
