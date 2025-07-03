@@ -84,9 +84,12 @@ const ValidProduct = ({
           </CardHeader>
           <CardContent className="space-y-3 ">
             <div className="flex">
-              <Calendar className="mr-5" />
-
-              <p>Datum: {product.product.metadata.Datum}</p>
+              <Calendar className="mr-5 shrink-0" />
+              {product.product.metadata.Datum.trim() !== "none" ? (
+                <p>Datum: {product.product.metadata.Datum}</p>
+              ) : (
+                <p>Datum: {product.product.metadata.Modifikation}</p>
+              )}
             </div>
             {product.product.metadata.Ablaufdatum && (
               <div className="flex">
@@ -96,7 +99,7 @@ const ValidProduct = ({
               </div>
             )}
             <div className="flex">
-              <Clock className="mr-5" />
+              <Clock className="mr-5 shrink-0" />
 
               <p>Uhrzeit: {product.product.metadata.Uhrzeit}</p>
             </div>

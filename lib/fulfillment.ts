@@ -116,11 +116,18 @@ export async function fulFillOrder(invoice_id: string) {
         ? product.metadata[key_meetingId]
         : "Keine Meeting ID";
       console.log("[FULFILLORDER] Product is a live stream", name, date, time);
+
+      const hasModification =
+        product.metadata.Modifikation ||
+        ` <strong>am ${date} um ${time}</strong>`;
+
       htmlString = `
       <h1 style="font-size:16px">Liebe(r) ${invoice.customer_name!},</h1>
   
       <br>
-      <p>Vielen Dank für deine Buchung von <strong>${name} am ${date} um ${time}.</strong></p>
+      <p>Vielen Dank für deine Buchung von <strong>${name}</strong>${
+        date === "none" && `: ${hasModification}`
+      }.</p>
   
   
       <p>Hier sind die Login-Daten:</p>
