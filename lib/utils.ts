@@ -72,9 +72,9 @@ export function isDateOlder(
   // If date is none return true
   if (dateString === "none") {
     console.log(
-      `[UTILS.isDateOlder] '${productName}' has no date or time set, returning true`
+      `[UTILS.isDateOlder] '${productName}' has no date, setting default date to 01.01.2100`
     );
-    return true;
+    dateString = "01.01.2100"; // Default date
   }
 
   // Split the date string into an array [day, month, year]
