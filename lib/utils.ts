@@ -69,6 +69,14 @@ export function isDateOlder(
   dateString: string,
   timeString: string
 ) {
+  // If date is none return true
+  if (!dateString || !timeString) {
+    console.log(
+      `[UTILS.isDateOlder] '${productName}' has no date or time set, returning true`
+    );
+    return true;
+  }
+
   // Split the date string into an array [day, month, year]
   const dateArray = dateString.split(".");
   const day = parseInt(dateArray[0]);
