@@ -70,7 +70,7 @@ export function isDateOlder(
   timeString: string
 ) {
   // If date is none return true
-  if (!dateString || !timeString) {
+  if (dateString === "none") {
     console.log(
       `[UTILS.isDateOlder] '${productName}' has no date or time set, returning true`
     );
