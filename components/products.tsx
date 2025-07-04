@@ -120,34 +120,19 @@ const Products = () => {
       // });
 
       let bookableProductsLiveSorted = sortedProducts(bookableProductsLive);
-      // Move all products with a date containing '2100' (as a year) to the beginning of the list
-      const products2100 = bookableProductsLiveSorted.filter((p: any) => {
-        const date = p.product.metadata.Datum;
-        // Extract year from date string (supports dd.mm.yyyy or yyyy-mm-dd)
-        let year = null;
-        if (date) {
-          const match = date.match(/(\d{4})$/);
-          if (match) year = match[1];
-        }
-        return year === "2100";
-      });
-      const productsNot2100 = bookableProductsLiveSorted.filter((p: any) => {
-        const date = p.product.metadata.Datum;
-        let year = null;
-        if (date) {
-          const match = date.match(/(\d{4})$/);
-          if (match) year = match[1];
-        }
-        return year !== "2100";
-      });
+      // Move all products with a date containing '2100' to the beginning of the list
+      const products2100 = bookableProductsLiveSorted.filter(
+        (p: any) =>
+          p.product.metadata.Datum && p.product.metadata.Datum.includes("2100")
+      );
+      const productsNot2100 = bookableProductsLiveSorted.filter(
+        (p: any) =>
+          !(
+            p.product.metadata.Datum &&
+            p.product.metadata.Datum.includes("2100")
+          )
+      );
       bookableProductsLiveSorted = [...products2100, ...productsNot2100];
-
-      // Move the last element to the front if there is more than one element
-      if (bookableProductsLiveSorted.length > 1) {
-        const last = bookableProductsLiveSorted.pop();
-        if (last)
-          bookableProductsLiveSorted = [last, ...bookableProductsLiveSorted];
-      }
 
       setValidProductsLive(bookableProductsLiveSorted);
       setInvalidProductsLive(invalidProductsLive);
