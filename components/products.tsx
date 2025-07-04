@@ -123,12 +123,22 @@ const Products = () => {
       // Move all products with a date containing '2100' (as a year) to the beginning of the list
       const products2100 = bookableProductsLiveSorted.filter((p: any) => {
         const date = p.product.metadata.Datum;
-        // Match 2100 as a year (4-digit number)
-        return date && /\b2100\b/.test(date);
+        // Extract year from date string (supports dd.mm.yyyy or yyyy-mm-dd)
+        let year = null;
+        if (date) {
+          const match = date.match(/(\d{4})$/);
+          if (match) year = match[1];
+        }
+        return year === "2100";
       });
       const productsNot2100 = bookableProductsLiveSorted.filter((p: any) => {
         const date = p.product.metadata.Datum;
-        return !(date && /\b2100\b/.test(date));
+        let year = null;
+        if (date) {
+          const match = date.match(/(\d{4})$/);
+          if (match) year = match[1];
+        }
+        return year !== "2100";
       });
       bookableProductsLiveSorted = [...products2100, ...productsNot2100];
 
