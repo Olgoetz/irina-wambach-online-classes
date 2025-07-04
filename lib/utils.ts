@@ -69,19 +69,19 @@ export function isDateOlder(
   dateString: string,
   timeString: string
 ) {
-  // If date is none return true
-  if (dateString === "none") {
-    console.log(
-      `[UTILS.isDateOlder] '${productName}' has no date, setting default date to 01.01.2100`
-    );
-    dateString = "01.01.2100"; // Default date
-  }
-
   // Split the date string into an array [day, month, year]
   const dateArray = dateString.split(".");
   const day = parseInt(dateArray[0]);
   const month = parseInt(dateArray[1]) - 1;
   let year = parseInt(dateArray[2]);
+
+  console.log(
+    `[UTILS.isDateOlder] '${productName}' dateString: "${dateString}" timeString: "${timeString}"`
+  );
+
+  if (timeString.split(":").length > 2) {
+    timeString = "10:00";
+  }
 
   const [hours, minutes] = timeString.split(":");
 
@@ -90,9 +90,11 @@ export function isDateOlder(
   }
 
   // Ensure that hours and minutes are two digits each
+
   const formattedHours = hours.padStart(2, "0");
   const formattedMinutes = minutes.padStart(2, "0");
 
+  console.log(formattedHours, formattedMinutes);
   // Create a Date object from the date and time
   const startDate = new Date(
     year,
@@ -103,6 +105,8 @@ export function isDateOlder(
   );
 
   const today = new Date();
+
+  console.log(startDate);
 
   // Compare the two dates
   if (startDate < today) {
