@@ -120,6 +120,20 @@ const Products = () => {
       // });
 
       let bookableProductsLiveSorted = sortedProducts(bookableProductsLive);
+      // Move all products with a date containing '2100' to the beginning of the list
+      const products2100 = bookableProductsLiveSorted.filter(
+        (p: any) =>
+          p.product.metadata.Datum && p.product.metadata.Datum.includes("2100")
+      );
+      const productsNot2100 = bookableProductsLiveSorted.filter(
+        (p: any) =>
+          !(
+            p.product.metadata.Datum &&
+            p.product.metadata.Datum.includes("2100")
+          )
+      );
+      bookableProductsLiveSorted = [...products2100, ...productsNot2100];
+
       // Move the last element to the front if there is more than one element
       if (bookableProductsLiveSorted.length > 1) {
         const last = bookableProductsLiveSorted.pop();
