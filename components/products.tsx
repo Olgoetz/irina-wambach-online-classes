@@ -119,7 +119,13 @@ const Products = () => {
       //   return dateTimeA.getTime() - dateTimeB.getTime();
       // });
 
-      const bookableProductsLiveSorted = sortedProducts(bookableProductsLive);
+      let bookableProductsLiveSorted = sortedProducts(bookableProductsLive);
+      // Move the last element to the front if there is more than one element
+      if (bookableProductsLiveSorted.length > 1) {
+        const last = bookableProductsLiveSorted.pop();
+        if (last)
+          bookableProductsLiveSorted = [last, ...bookableProductsLiveSorted];
+      }
 
       setValidProductsLive(bookableProductsLiveSorted);
       setInvalidProductsLive(invalidProductsLive);
