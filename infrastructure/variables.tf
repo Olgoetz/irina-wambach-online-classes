@@ -23,17 +23,17 @@ variable "STRIPE_WEBHOOK_SECRET" {
   type      = string
   sensitive = true
 }
-variable "SENDGRID_API_KEY" {
+variable "RESEND_API_KEY" {
   type      = string
   sensitive = true
 }
-variable "SENDGRID_FROM_EMAIL" {
+variable "RESEND_FROM_EMAIL" {
   type = string
 }
-variable "SENDGRID_BCC_EMAIL" {
+variable "RESEND_BCC_EMAIL" {
   type = string
 }
-variable "SENDGRID_BCC_EMAIL_PROD" {
+variable "RESEND_BCC_EMAIL_PROD" {
   type = string
 }
 variable "URL" {

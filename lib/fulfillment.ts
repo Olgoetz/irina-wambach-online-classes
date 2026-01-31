@@ -1,6 +1,7 @@
 import { USER } from "./config";
 import stripe from "./get-stripe";
-import { sendEmail } from "./sendEmail";
+import { sendMail } from "./resend";
+
 import {
   containsSubstringCaseInsensitive,
   findKeyInMetaData,
@@ -28,14 +29,15 @@ export async function fulFillOrder(invoice_id: string) {
     const invoice = await stripe.invoices.retrieve(invoice_id);
     console.log("[FULFILLORDER] Invoice:", invoice);
     // Check if invoice was successfully paid
-    const isPaid: boolean = invoice.paid;
-    console.log("[FULFILLORDER] isPaid:", isPaid);
-    if (!isPaid) {
+    const status = invoice.status;
+    console.log("[FULFILLORDER] invoice status:", status);
+    if (status !== "paid") {
       throw new Error("Payment failed");
     }
 
     // Get product information
-    const productId = invoice.lines.data[0].price?.product as string;
+    const productId = invoice.lines.data[0].pricing?.price_details
+      ?.product as string;
     const product = await stripe.products.retrieve(productId);
 
     const name = product.name;
@@ -53,7 +55,7 @@ export async function fulFillOrder(invoice_id: string) {
     if (isRecording) {
       const key_kenncode = validateObjectKeysContainSubstring(
         product.metadata,
-        "kenncode"
+        "kenncode",
       );
 
       const kenncode = key_kenncode
@@ -64,7 +66,7 @@ export async function fulFillOrder(invoice_id: string) {
         name,
         date,
         time,
-        kenncode
+        kenncode,
       );
 
       htmlString = `
@@ -96,13 +98,13 @@ export async function fulFillOrder(invoice_id: string) {
       subject = `Aufzeichnung: Online-Fitness-Kurs mit ${
         USER.split(" ")[0]
       } - Rechnung und Zugangsdaten`;
-      result = await sendEmail(htmlString, invoice.customer_email!, subject);
+      result = await sendMail(invoice.customer_email!, subject, htmlString);
 
       return result;
     } else {
       const key_password = validateObjectKeysContainSubstring(
         product.metadata,
-        "kennwort"
+        "kennwort",
       );
 
       const password = key_password
@@ -110,7 +112,7 @@ export async function fulFillOrder(invoice_id: string) {
         : "Kein Kennwort";
       const key_meetingId = validateObjectKeysContainSubstring(
         product.metadata,
-        "meeting"
+        "meeting",
       );
       const meetingId = key_meetingId
         ? product.metadata[key_meetingId]
@@ -150,7 +152,7 @@ export async function fulFillOrder(invoice_id: string) {
       subject = `Live: Online-Yoga-Kurs mit ${
         USER.split(" ")[0]
       } - Rechnung und Zugangsdaten`;
-      result = await sendEmail(htmlString, invoice.customer_email!, subject);
+      result = await sendMail(invoice.customer_email!, subject, htmlString);
       return result;
     }
   } catch (err) {
