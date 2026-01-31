@@ -6,7 +6,7 @@ resource "vercel_project" "this" {
   name      = "irina-wambach-online-classes"
   framework = "nextjs"
 
-
+  node_version = "24.x"
   git_repository = {
     type              = "github"
     repo              = data.github_repository.this.full_name
