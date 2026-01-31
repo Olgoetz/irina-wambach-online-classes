@@ -49,30 +49,30 @@ resource "vercel_project_environment_variable" "stripe_webhook_secret_prod" {
   target     = ["production"]
 }
 
-resource "vercel_project_environment_variable" "sendgrid_key" {
+resource "vercel_project_environment_variable" "RESEND_key" {
   project_id = vercel_project.this.id
-  key        = "SENDGRID_API_KEY"
-  value      = var.SENDGRID_API_KEY
+  key        = "RESEND_API_KEY"
+  value      = var.RESEND_API_KEY
   target     = ["production", "preview", "development"]
 }
 
-resource "vercel_project_environment_variable" "sendgrid_from" {
+resource "vercel_project_environment_variable" "RESEND_from" {
   project_id = vercel_project.this.id
-  key        = "SENDGRID_FROM_EMAIL"
-  value      = var.SENDGRID_FROM_EMAIL
+  key        = "RESEND_FROM_EMAIL"
+  value      = var.RESEND_FROM_EMAIL
   target     = ["production", "preview", "development"]
 }
 
-resource "vercel_project_environment_variable" "sendgrid_bcc" {
+resource "vercel_project_environment_variable" "RESEND_bcc" {
   project_id = vercel_project.this.id
-  key        = "SENDGRID_BCC_EMAIL"
-  value      = var.SENDGRID_BCC_EMAIL
+  key        = "RESEND_BCC_EMAIL"
+  value      = var.RESEND_BCC_EMAIL
   target     = ["preview", "development"]
 }
-resource "vercel_project_environment_variable" "sendgrid_bcc_prod" {
+resource "vercel_project_environment_variable" "RESEND_bcc_prod" {
   project_id = vercel_project.this.id
-  key        = "SENDGRID_BCC_EMAIL"
-  value      = var.SENDGRID_BCC_EMAIL_PROD
+  key        = "RESEND_BCC_EMAIL"
+  value      = var.RESEND_BCC_EMAIL_PROD
   target     = ["production"]
 }
 resource "vercel_project_environment_variable" "url" {
