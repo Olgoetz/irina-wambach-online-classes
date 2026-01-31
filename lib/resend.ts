@@ -11,7 +11,8 @@ export const sendMail = async (to: string, subject: string, html: string) => {
   const { data, error } = await resend.emails.send({
     from: `Irina Wambach <${process.env.RESEND_FROM_EMAIL}>`,
     to: [to],
-    cc: [process.env.RESEND_CC_EMAIL!],
+    bcc: [process.env.RESEND_BCC_EMAIL!],
+    replyTo: process.env.RESEND_BCC_EMAIL!,
     subject,
     html,
     tags: [
