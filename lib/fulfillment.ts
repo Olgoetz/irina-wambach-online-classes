@@ -52,6 +52,9 @@ export async function fulFillOrder(invoice_id: string) {
     let subject;
     let htmlString;
 
+    // Use customer name with fallback to avoid "(null)" in emails
+    const customerName = invoice.customer_name || "Teilnehmer/in";
+
     if (isRecording) {
       const key_kenncode = validateObjectKeysContainSubstring(
         product.metadata,
@@ -70,7 +73,7 @@ export async function fulFillOrder(invoice_id: string) {
       );
 
       htmlString = `
-      <h1 style="font-size:16px">Liebe(r) ${invoice.customer_name!},</h1>
+      <h1 style="font-size:16px">Liebe(r) ${customerName},</h1>
   
       <br>
       <p>Vielen Dank für deine Buchung von <strong>${name} vom ${date} um ${time}.</strong></p>
@@ -124,7 +127,7 @@ export async function fulFillOrder(invoice_id: string) {
         ` <strong>am ${date} um ${time}</strong>`;
 
       htmlString = `
-      <h1 style="font-size:16px">Liebe(r) ${invoice.customer_name!},</h1>
+      <h1 style="font-size:16px">Liebe(r) ${customerName},</h1>
   
       <br>
       <p>Vielen Dank für deine Buchung von <strong>${name}</strong>${hasModification}.</p>
